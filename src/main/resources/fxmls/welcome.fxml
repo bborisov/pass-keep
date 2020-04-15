@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <BorderPane prefHeight="900.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pass.keep.controllers.PassKeepController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pass.keep.controllers.WelcomeController">
     <bottom>
         <Button fx:id="actionBtn" mnemonicParsing="false" onAction="#onAction" text="Register"
                 BorderPane.alignment="CENTER">

@@ -4,17 +4,17 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import pass.keep.utils.FxUtil;
+import pass.keep.views.SceneView;
 
 @Slf4j
 public class PassKeep extends Application {
 
-    private static final String PASS_KEEP_FXML = "fxml/pass_keep.fxml";
-    private static final String WINDOW_TITLE = "Password Keeper";
+    private static final String APP_WINDOW_TITLE = "Password Keeper";
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FxUtil.loadScene(primaryStage, PASS_KEEP_FXML);
-        primaryStage.setTitle(WINDOW_TITLE);
+    public void start(Stage primaryStage) {
+        FxUtil.openScene(primaryStage, SceneView.WELCOME);
+        primaryStage.setTitle(APP_WINDOW_TITLE);
         primaryStage.show();
         log.info("Application started successfully");
     }
