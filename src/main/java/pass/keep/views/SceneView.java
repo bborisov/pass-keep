@@ -1,6 +1,6 @@
 package pass.keep.views;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.Scene;
 import pass.keep.utils.FxUtil;
 
 public enum SceneView {
@@ -9,13 +9,13 @@ public enum SceneView {
     REGISTRATION("registration.fxml");
 
     private static final String SCENE_FXML_FOLDER_PREFIX = "fxmls/";
-    private final Pane root;
+    private final Scene scene;
 
     SceneView(String sceneFxmlName) {
-        root = FxUtil.loadRootPane(SCENE_FXML_FOLDER_PREFIX + sceneFxmlName);
+        scene = FxUtil.loadScene(SCENE_FXML_FOLDER_PREFIX + sceneFxmlName);
     }
 
-    public Pane getRoot() {
-        return root;
+    public Scene getScene() {
+        return scene;
     }
 }

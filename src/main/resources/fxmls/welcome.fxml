@@ -8,8 +8,7 @@
 <BorderPane prefHeight="900.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="pass.keep.controllers.WelcomeController">
     <bottom>
-        <Button fx:id="actionBtn" mnemonicParsing="false" onAction="#onAction" text="Register"
-                BorderPane.alignment="CENTER">
+        <Button fx:id="nextSceneButton" mnemonicParsing="false" onAction="#openNextScene" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="50.0"/>
             </BorderPane.margin>
@@ -26,8 +25,7 @@
                     <Insets bottom="50.0"/>
                 </VBox.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="In order to use this application you need to create an account. Please clink the &quot;Register&quot; button below.">
+            <Text fx:id="lowerTitle" strokeType="OUTSIDE" strokeWidth="0.0">
                 <font>
                     <Font size="21.0"/>
                 </font>
