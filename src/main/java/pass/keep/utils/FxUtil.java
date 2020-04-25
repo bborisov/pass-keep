@@ -15,13 +15,26 @@ public class FxUtil {
 
     private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
 
-    public static void openScene(ActionEvent event, SceneView sceneView) {
+    public static void openScene(ActionEvent event, SceneView sceneView, boolean keepStageResolution) {
         Stage stage = FxUtil.getStageFromActionEvent(event);
-        FxUtil.openScene(stage, sceneView);
+        FxUtil.openScene(stage, sceneView, keepStageResolution);
     }
 
-    public static void openScene(Stage stage, SceneView sceneView) {
+    public static void openScene(Stage stage, SceneView sceneView, boolean keepStageResolution) {
+        double xPos = stage.getX();
+        double yPos = stage.getY();
+        double stageWidth = stage.getWidth();
+        double stageHeight = stage.getHeight();
+
+        stage.hide();
         stage.setScene(sceneView.getScene());
+        if (keepStageResolution) {
+            stage.setX(xPos);
+            stage.setY(yPos);
+            stage.setWidth(stageWidth);
+            stage.setHeight(stageHeight);
+        }
+        stage.show();
     }
 
     public static Stage getStageFromActionEvent(ActionEvent event) {

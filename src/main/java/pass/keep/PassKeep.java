@@ -14,7 +14,7 @@ public class PassKeep extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FxUtil.openScene(primaryStage, SceneView.WELCOME);
+        FxUtil.openScene(primaryStage, SceneView.WELCOME, false);
         WelcomeController welcomeController = FxUtil.getController(primaryStage);
         welcomeController.adjustTexts();
 

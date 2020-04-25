@@ -39,7 +39,7 @@ public class WelcomeController {
             nextScene = SceneView.REGISTRATION;
         }
 
-        FxUtil.openScene(event, nextScene);
+        FxUtil.openScene(event, nextScene, true);
     }
 
     public void adjustTexts() {
