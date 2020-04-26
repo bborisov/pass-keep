@@ -2,6 +2,9 @@ package pass.keep.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,7 +21,7 @@ public class FileUtil {
     private static final String FXML_FILE_EXTENSION = ".fxml";
     private static final String IDENTITY_FOLDER = "identity";
     private static final String IDENTITY_FILE_PREFIX = "1-face_";
-    private static final String IDENTITY_FILE_EXTENSION = ".png";
+    private static final String IDENTITY_FILE_EXTENSION = "png";
 
     static {
         try {
@@ -45,6 +48,16 @@ public class FileUtil {
         }
 
         return true;
+    }
+
+    public static void saveIdentity(BufferedImage image, int index) {
+        String fileName = IDENTITY_FILE_PREFIX + index + "." + IDENTITY_FILE_EXTENSION;
+        try {
+            File file = Paths.get(CLASS_LOADER.getResource(IDENTITY_FOLDER).toURI()).resolve(fileName).toFile();
+            ImageIO.write(image, IDENTITY_FILE_EXTENSION, file);
+        } catch (URISyntaxException | IOException e) {
+            log.error("Cannot save identity image", e);
+        }
     }
 
     public static URL getFxmlResource(String sceneName) {
