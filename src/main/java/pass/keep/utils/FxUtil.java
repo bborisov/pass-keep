@@ -13,10 +13,8 @@ import java.io.IOException;
 @Slf4j
 public class FxUtil {
 
-    private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
-
     public static void openScene(ActionEvent event, SceneView sceneView, boolean keepStageResolution) {
-        Stage stage = FxUtil.getStageFromActionEvent(event);
+        Stage stage = FxUtil.getStage(event);
         FxUtil.openScene(stage, sceneView, keepStageResolution);
     }
 
@@ -37,7 +35,7 @@ public class FxUtil {
         stage.show();
     }
 
-    public static Stage getStageFromActionEvent(ActionEvent event) {
+    public static Stage getStage(ActionEvent event) {
         return (Stage) ((Node) event.getSource()).getScene().getWindow();
     }
 
@@ -45,16 +43,16 @@ public class FxUtil {
         return ((FXMLLoader) stage.getScene().getUserData()).getController();
     }
 
-    public static Scene loadScene(String sceneFxmlPath) {
-        FXMLLoader fxmlLoader = new FXMLLoader(CLASS_LOADER.getResource(sceneFxmlPath));
+    public static Scene loadScene(String sceneName) {
+        FXMLLoader fxmlLoader = new FXMLLoader(FileUtil.getFxmlResource(sceneName));
 
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load());
             scene.setUserData(fxmlLoader);
-            log.info("Scene's FXML with path '{}' loaded successfully", sceneFxmlPath);
+            log.info("FXML of '{}' scene loaded successfully", sceneName);
         } catch (IOException e) {
-            log.error("Cannot load scene's FXML with path " + sceneFxmlPath, e);
+            log.error("Cannot load FXML of '" + sceneName + "' scene", e);
         }
 
         return scene;

@@ -10,7 +10,7 @@
         <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startCamera" text="Start Camera"
                 BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="50.0"/>
+                <Insets bottom="50.0" top="25.0"/>
             </BorderPane.margin>
         </Button>
     </bottom>
