@@ -19,7 +19,6 @@ public class WelcomeController {
 
     @FXML
     private Text lowerTitle;
-
     @FXML
     private Button nextSceneButton;
 

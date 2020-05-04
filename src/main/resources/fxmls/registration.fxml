@@ -3,11 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="pass.keep.controllers.RegistrationController">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pass.keep.controllers.RegistrationController">
     <bottom>
-        <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startCamera" text="Start Camera"
+        <Button fx:id="startButton" mnemonicParsing="false" onAction="#collectIdentity" text="Start"
                 BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="50.0" top="25.0"/>
@@ -15,7 +17,25 @@
         </Button>
     </bottom>
     <center>
-        <ImageView fx:id="currentFrame" fitHeight="700.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true"
-                   BorderPane.alignment="CENTER"/>
+        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <ImageView fx:id="cameraView" fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true"/>
+            <Text fx:id="notification" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Registration process takes between 20 and 40 seconds of video capturing depending on your machine capabilities. When you start, you will see information at the top of the page instructing you to move your face towards a specific direction. In order to register in the best possible way, please follow it!"
+                  textAlignment="CENTER" wrappingWidth="1000.0">
+                <font>
+                    <Font size="17.0"/>
+                </font>
+            </Text>
+        </VBox>
     </center>
+    <top>
+        <Text fx:id="faceDirection" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="CENTER">
+            <font>
+                <Font size="19.0"/>
+            </font>
+            <BorderPane.margin>
+                <Insets bottom="25.0" top="50.0"/>
+            </BorderPane.margin>
+        </Text>
+    </top>
 </BorderPane>
