@@ -25,12 +25,12 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RegistrationController {
 
+    private static final String START_BUTTON_TRY_AGAIN = "Try again";
+    private static final String START_BUTTON_PROCEED = "Proceed";
     private static final String NOTIFICATION_CAMERA_UNAVAILABLE = "Your camera is not available." +
             " Please check is it installed correctly, blocked by antivirus software or used by another program.";
     private static final String NOTIFICATION_REGISTRATION_COMPLETED = "Your registration has completed successfully." +
             " Please proceed to credentials section.";
-    private static final String START_BUTTON_TRY_AGAIN = "Try again";
-    private static final String START_BUTTON_PROCEED = "Proceed";
     private static final String FACE_DIRECTION_RIGHT = "Look to the right";
     private static final String FACE_DIRECTION_LEFT = "Look to the left";
     private static final String FACE_DIRECTION_UP = "Look up";
@@ -39,12 +39,12 @@ public class RegistrationController {
     private static final int IMAGE_COUNT_THRESHOLD = 60;
 
     private ScheduledExecutorService executor;
-    private VideoCapture capture = new VideoCapture();
+    private VideoCapture capture;
     private int frameCounter;
 
-    private OpenCVFrameConverter.ToMat matConverter = new OpenCVFrameConverter.ToMat();
-    private JavaFXFrameConverter fxConverter = new JavaFXFrameConverter();
-    private Java2DFrameConverter cartesianConverter = new Java2DFrameConverter();
+    private OpenCVFrameConverter.ToMat matConverter;
+    private JavaFXFrameConverter fxConverter;
+    private Java2DFrameConverter cartesianConverter;
 
     @FXML
     private Text faceDirection;
@@ -63,8 +63,7 @@ public class RegistrationController {
             return;
         }
 
-        // Init thread pool
-        executor = Executors.newScheduledThreadPool(2);
+        initResources();
 
         // Start the video capture from camera
         capture.open(0);
@@ -72,7 +71,7 @@ public class RegistrationController {
         // Grab a frame every 33 ms (30 frames/sec)
         executor.scheduleAtFixedRate(() -> {
             Frame frame = grabFrame();
-            Platform.runLater(() -> processFrame(frame, cameraView));
+            Platform.runLater(() -> processFrame(frame));
         }, 0, 33, TimeUnit.MILLISECONDS);
         startButton.setDisable(true);
     }
@@ -98,7 +97,7 @@ public class RegistrationController {
         return frame;
     }
 
-    private void processFrame(Frame frame, ImageView imageView) {
+    private void processFrame(Frame frame) {
         if (handleIdentityCollected()) {
             return;
         }
@@ -108,35 +107,19 @@ public class RegistrationController {
         }
 
         notification.setVisible(false);
-        imageView.setImage(fxConverter.convert(frame));
+        cameraView.setImage(fxConverter.convert(frame));
         adjustFaceDirectionText();
         if (frameCounter % 10 != 0) {
             return;
         }
 
-        int imageIndex = frameCounter / 10;
-        executor.schedule(() -> {
-            BufferedImage bufferedImage = cartesianConverter.convert(frame);
-            FileUtil.saveIdentity(bufferedImage, imageIndex);
-        }, 0, TimeUnit.MILLISECONDS);
-    }
-
-    private boolean handleCameraIssue(Frame frame) {
-        if (frame == null) {
-            notification.setText(NOTIFICATION_CAMERA_UNAVAILABLE);
-            tearDown();
-            startButton.setText(START_BUTTON_TRY_AGAIN);
-            startButton.setDisable(false);
-            return true;
-        }
-
-        return false;
+        saveFrame(frame);
     }
 
     private boolean handleIdentityCollected() {
         if (isIdentityCollected()) {
             faceDirection.setVisible(false);
-            tearDown();
+            closeResources();
             notification.setText(NOTIFICATION_REGISTRATION_COMPLETED);
             notification.setVisible(true);
             startButton.setText(START_BUTTON_PROCEED);
@@ -149,6 +132,26 @@ public class RegistrationController {
 
     private boolean isIdentityCollected() {
         return frameCounter / 10 > IMAGE_COUNT_THRESHOLD;
+    }
+
+    private boolean handleCameraIssue(Frame frame) {
+        if (frame == null) {
+            notification.setText(NOTIFICATION_CAMERA_UNAVAILABLE);
+            closeResources();
+            startButton.setText(START_BUTTON_TRY_AGAIN);
+            startButton.setDisable(false);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void saveFrame(Frame frame) {
+        int imageIndex = frameCounter / 10;
+        executor.schedule(() -> {
+            BufferedImage bufferedImage = cartesianConverter.convert(frame);
+            FileUtil.saveIdentity(bufferedImage, imageIndex);
+        }, 0, TimeUnit.MILLISECONDS);
     }
 
     private void adjustFaceDirectionText() {
@@ -178,7 +181,16 @@ public class RegistrationController {
         }
     }
 
-    private void tearDown() {
+    private void initResources() {
+        executor = Executors.newScheduledThreadPool(2);
+        capture = new VideoCapture();
+
+        matConverter = new OpenCVFrameConverter.ToMat();
+        fxConverter = new JavaFXFrameConverter();
+        cartesianConverter = new Java2DFrameConverter();
+    }
+
+    private void closeResources() {
         cameraView.setImage(null);
         capture.release();
         executor.shutdown();
