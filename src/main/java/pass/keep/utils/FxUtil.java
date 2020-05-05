@@ -19,6 +19,7 @@ public class FxUtil {
     }
 
     public static void openScene(Stage stage, SceneView sceneView, boolean keepStageResolution) {
+        log.info("Move action to '{}' scene", sceneView.name().toLowerCase());
         double xPos = stage.getX();
         double yPos = stage.getY();
         double stageWidth = stage.getWidth();

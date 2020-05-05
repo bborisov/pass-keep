@@ -64,15 +64,6 @@ public class RegistrationController {
         }
 
         initResources();
-
-        // Start the video capture from camera
-        capture.open(0);
-
-        // Grab a frame every 33 ms (30 frames/sec)
-        executor.scheduleAtFixedRate(() -> {
-            Frame frame = grabFrame();
-            Platform.runLater(() -> processFrame(frame));
-        }, 0, 33, TimeUnit.MILLISECONDS);
         startButton.setDisable(true);
     }
 
@@ -118,6 +109,7 @@ public class RegistrationController {
 
     private boolean handleIdentityCollected() {
         if (isIdentityCollected()) {
+            log.info("Identity frames collected successfully");
             faceDirection.setVisible(false);
             closeResources();
             notification.setText(NOTIFICATION_REGISTRATION_COMPLETED);
@@ -136,6 +128,7 @@ public class RegistrationController {
 
     private boolean handleCameraIssue(Frame frame) {
         if (frame == null) {
+            log.error("Camera issue encountered");
             notification.setText(NOTIFICATION_CAMERA_UNAVAILABLE);
             closeResources();
             startButton.setText(START_BUTTON_TRY_AGAIN);
@@ -182,17 +175,28 @@ public class RegistrationController {
     }
 
     private void initResources() {
-        executor = Executors.newScheduledThreadPool(2);
+        log.info("Initializing resources");
         capture = new VideoCapture();
+        executor = Executors.newScheduledThreadPool(2);
 
         matConverter = new OpenCVFrameConverter.ToMat();
         fxConverter = new JavaFXFrameConverter();
         cartesianConverter = new Java2DFrameConverter();
+
+        // Start the video capture from camera
+        capture.open(0);
+
+        // Grab a frame every 33 ms (30 frames/sec)
+        executor.scheduleAtFixedRate(() -> {
+            Frame frame = grabFrame();
+            Platform.runLater(() -> processFrame(frame));
+        }, 0, 33, TimeUnit.MILLISECONDS);
     }
 
     private void closeResources() {
+        log.info("Closing resources");
         cameraView.setImage(null);
-        capture.release();
         executor.shutdown();
+        capture.release();
     }
 }
