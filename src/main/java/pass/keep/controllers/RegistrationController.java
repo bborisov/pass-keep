@@ -24,8 +24,6 @@ public class RegistrationController extends CameraController {
     private static final String FACE_DIRECTION_CENTER = "Look straight ahead";
     private static final int IMAGE_COUNT_THRESHOLD = 60;
 
-    private int frameCounter;
-
     private Java2DFrameConverter cartesianConverter;
 
     @FXML
@@ -120,10 +118,6 @@ public class RegistrationController extends CameraController {
 
         initResources(() -> {
             Frame frame = grabFrame();
-            if (frame != null) {
-                frameCounter++;
-            }
-
             Platform.runLater(() -> processFrame(frame));
         });
     }

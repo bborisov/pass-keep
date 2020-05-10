@@ -7,7 +7,7 @@ import pass.keep.utils.FxUtil;
 @Getter
 public enum SceneView {
 
-    WELCOME, REGISTRATION;
+    WELCOME, REGISTRATION, AUTHENTICATION;
 
     private final Scene scene;
 

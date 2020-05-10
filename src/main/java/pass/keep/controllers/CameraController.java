@@ -27,6 +27,7 @@ public abstract class CameraController {
 
     protected ScheduledExecutorService executor;
     protected VideoCapture capture;
+    protected int frameCounter;
 
     protected OpenCVFrameConverter.ToMat matConverter;
     protected JavaFXFrameConverter fxConverter;
@@ -40,7 +41,7 @@ public abstract class CameraController {
 
     protected Frame grabFrame() {
         if (!capture.isOpened()) {
-            log.warn("Cannot grab a frame because camera was not started");
+            log.warn("Cannot grab frame - camera is not started");
             return null;
         }
 
@@ -50,6 +51,7 @@ public abstract class CameraController {
             this.capture.read(mat);
             if (!mat.empty()) {
                 frame = matConverter.convert(mat);
+                frameCounter++;
             }
         } catch (Exception e) {
             log.error("Error while capturing the current frame", e);
@@ -73,8 +75,9 @@ public abstract class CameraController {
 
     protected void initResources(Runnable taskToBeScheduled) {
         log.info("Initializing resources");
-        capture = new VideoCapture();
         executor = Executors.newScheduledThreadPool(2);
+        capture = new VideoCapture();
+        frameCounter = 0;
 
         matConverter = new OpenCVFrameConverter.ToMat();
         fxConverter = new JavaFXFrameConverter();

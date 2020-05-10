@@ -7,9 +7,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="pass.keep.controllers.RegistrationController">
+            fx:controller="pass.keep.controllers.AuthenticationController">
     <bottom>
-        <Button fx:id="startButton" mnemonicParsing="false" onAction="#collectIdentity" text="Start"
+        <Button fx:id="startButton" mnemonicParsing="false" onAction="#verifyIdentity" text="Start"
                 BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="50.0" top="25.0"/>
@@ -20,7 +20,7 @@
         <VBox alignment="CENTER" BorderPane.alignment="CENTER">
             <ImageView fx:id="cameraView" fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true"/>
             <Text fx:id="notification" strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Registration process takes between 20 and 40 seconds of video capturing depending on your machine capabilities. When you start, you will see information at the top of the window instructing you to move your face towards a specific direction. In order to register in the best possible way, please follow it!"
+                  text="Authentication process takes between 10 and 20 seconds of video capturing depending on your machine capabilities. The algorithm focuses on the features of your face and decides whether you can proceed or not."
                   textAlignment="CENTER" wrappingWidth="1000.0">
                 <font>
                     <Font size="17.0"/>
@@ -28,14 +28,4 @@
             </Text>
         </VBox>
     </center>
-    <top>
-        <Text fx:id="faceDirection" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="CENTER">
-            <font>
-                <Font size="19.0"/>
-            </font>
-            <BorderPane.margin>
-                <Insets bottom="25.0" top="50.0"/>
-            </BorderPane.margin>
-        </Text>
-    </top>
 </BorderPane>

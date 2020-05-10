@@ -26,8 +26,7 @@ public class WelcomeController {
     protected void openNextScene(ActionEvent event) {
         SceneView nextScene = SceneView.REGISTRATION;
         if (FileUtil.isIdentityProvided()) {
-            // TODO Change after new scene is ready
-            nextScene = SceneView.REGISTRATION;
+            nextScene = SceneView.AUTHENTICATION;
         }
 
         FxUtil.openScene(event, nextScene, true);
