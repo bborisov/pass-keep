@@ -14,12 +14,12 @@ public class PassKeep extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.setTitle(APP_WINDOW_TITLE);
+
         FxUtil.openScene(primaryStage, SceneView.WELCOME, false);
         WelcomeController welcomeController = FxUtil.getController(primaryStage);
         welcomeController.adjustTexts();
 
-        primaryStage.setTitle(APP_WINDOW_TITLE);
-        primaryStage.show();
         log.info("Application started successfully");
     }
 

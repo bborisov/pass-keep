@@ -13,9 +13,11 @@ import java.io.IOException;
 @Slf4j
 public class FxUtil {
 
-    public static void openScene(ActionEvent event, SceneView sceneView, boolean keepStageResolution) {
+    public static Stage openScene(ActionEvent event, SceneView sceneView, boolean keepStageResolution) {
         Stage stage = FxUtil.getStage(event);
         FxUtil.openScene(stage, sceneView, keepStageResolution);
+
+        return stage;
     }
 
     public static void openScene(Stage stage, SceneView sceneView, boolean keepStageResolution) {
