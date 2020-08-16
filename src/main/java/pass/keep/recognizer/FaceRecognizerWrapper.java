@@ -20,7 +20,7 @@ import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
 
 @Slf4j
-public class CustomFaceRecognizer {
+public class FaceRecognizerWrapper {
 
     private static final int EXPECTED_LABEL = Integer.parseInt(FileUtil.IDENTITY_LABEL);
     // TODO Needs adjustment
@@ -64,6 +64,7 @@ public class CustomFaceRecognizer {
         }
 
         Mat grayscaleMat = convertToGrayscale(mat);
+        // TODO Check 1 in constructors
         IntPointer label = new IntPointer(1);
         DoublePointer confidence = new DoublePointer(1);
         recognizer.predict(grayscaleMat, label, confidence);

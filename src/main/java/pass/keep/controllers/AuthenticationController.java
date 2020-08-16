@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.opencv.opencv_core.Mat;
-import pass.keep.recognizer.CustomFaceRecognizer;
+import pass.keep.recognizer.FaceRecognizerWrapper;
 import pass.keep.utils.FxUtil;
 import pass.keep.views.SceneView;
 
@@ -21,7 +21,7 @@ public class AuthenticationController extends CameraController {
     // 90th frame -> 3rd second, 180th frame -> 6th second, 270th frame -> 9th second (30 frames per second)
     private static final List<Integer> RECOGNIZABLE_FRAME_INDEXES = Arrays.asList(90, 180, 270);
 
-    private CustomFaceRecognizer recognizer;
+    private FaceRecognizerWrapper recognizer;
     private List<Mat> recognizableFrames;
     private volatile boolean isRecognizing;
     private volatile boolean isAuthenticated;
@@ -72,6 +72,7 @@ public class AuthenticationController extends CameraController {
 
         if (isAuthenticated) {
             log.info("Successful recognition");
+            // TODO Adjust for negative case
             Platform.runLater(() -> {
                 notification.setText(NOTIFICATION_PROCESS_COMPLETED);
                 notification.setVisible(true);
@@ -89,7 +90,7 @@ public class AuthenticationController extends CameraController {
     }
 
     private void initResources() {
-        recognizer = new CustomFaceRecognizer();
+        recognizer = new FaceRecognizerWrapper();
         recognizableFrames = new ArrayList<>(RECOGNIZABLE_FRAME_INDEXES.size());
         isRecognizing = false;
         isAuthenticated = false;
