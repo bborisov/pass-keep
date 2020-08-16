@@ -8,26 +8,6 @@
 <?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="pass.keep.controllers.RegistrationController">
-    <bottom>
-        <Button fx:id="startButton" mnemonicParsing="false" onAction="#collectIdentity" text="Start"
-                BorderPane.alignment="CENTER">
-            <BorderPane.margin>
-                <Insets bottom="50.0" top="25.0"/>
-            </BorderPane.margin>
-        </Button>
-    </bottom>
-    <center>
-        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-            <ImageView fx:id="cameraView" fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true"/>
-            <Text fx:id="notification" strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Registration process takes between 20 and 40 seconds of video capturing depending on your machine capabilities. When you start, you will see information at the top of the window instructing you to move your face towards a specific direction. In order to register in the best possible way, please follow it!"
-                  textAlignment="CENTER" wrappingWidth="1000.0">
-                <font>
-                    <Font size="17.0"/>
-                </font>
-            </Text>
-        </VBox>
-    </center>
     <top>
         <Text fx:id="faceDirection" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="CENTER">
             <font>
@@ -38,4 +18,24 @@
             </BorderPane.margin>
         </Text>
     </top>
+    <center>
+        <ImageView fx:id="cameraView" fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true"/>
+    </center>
+    <bottom>
+        <VBox spacing="25" alignment="CENTER" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="50.0" top="25.0"/>
+            </BorderPane.margin>
+            <Text fx:id="notification" strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="Registration process takes between 20 and 40 seconds of video capturing depending on your machine capabilities. When you start, you will see information at the top of the window instructing you to move your face towards a specific direction. In order to register in the best possible way, please follow it!"
+                  textAlignment="CENTER" wrappingWidth="1000.0">
+                <font>
+                    <Font size="17.0"/>
+                </font>
+            </Text>
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#collectIdentity" text="Start"
+                    BorderPane.alignment="CENTER">
+            </Button>
+        </VBox>
+    </bottom>
 </BorderPane>

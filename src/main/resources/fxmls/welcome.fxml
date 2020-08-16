@@ -7,23 +7,16 @@
 <?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="pass.keep.controllers.WelcomeController" prefHeight="900.0" prefWidth="1400.0">
-    <bottom>
-        <Button fx:id="nextSceneButton" mnemonicParsing="false" onAction="#openNextScene" BorderPane.alignment="CENTER">
+    <center>
+        <VBox spacing="50" alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="50.0" top="25.0"/>
             </BorderPane.margin>
-        </Button>
-    </bottom>
-    <center>
-        <VBox alignment="CENTER">
             <Text strokeType="OUTSIDE" strokeWidth="0.0"
                   text="Password Keeper helps you store your credentials in a safe manner!">
                 <font>
                     <Font size="27.0"/>
                 </font>
-                <VBox.margin>
-                    <Insets bottom="50.0"/>
-                </VBox.margin>
             </Text>
             <Text fx:id="lowerTitle" strokeType="OUTSIDE" strokeWidth="0.0">
                 <font>
@@ -32,4 +25,11 @@
             </Text>
         </VBox>
     </center>
+    <bottom>
+        <Button fx:id="nextSceneButton" mnemonicParsing="false" onAction="#openNextScene" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="50.0" top="25.0"/>
+            </BorderPane.margin>
+        </Button>
+    </bottom>
 </BorderPane>

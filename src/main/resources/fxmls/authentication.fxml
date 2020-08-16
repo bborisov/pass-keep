@@ -8,17 +8,14 @@
 <?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="pass.keep.controllers.AuthenticationController">
+    <center>
+        <ImageView fx:id="cameraView" fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true"/>
+    </center>
     <bottom>
-        <Button fx:id="startButton" mnemonicParsing="false" onAction="#verifyIdentity" text="Start"
-                BorderPane.alignment="CENTER">
+        <VBox spacing="25" alignment="CENTER" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="50.0" top="25.0"/>
             </BorderPane.margin>
-        </Button>
-    </bottom>
-    <center>
-        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-            <ImageView fx:id="cameraView" fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true"/>
             <Text fx:id="notification" strokeType="OUTSIDE" strokeWidth="0.0"
                   text="Authentication process takes between 10 and 20 seconds of video capturing depending on your machine capabilities. The algorithm focuses on the features of your face and decides whether you can proceed or not."
                   textAlignment="CENTER" wrappingWidth="1000.0">
@@ -26,6 +23,9 @@
                     <Font size="17.0"/>
                 </font>
             </Text>
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#verifyIdentity" text="Start"
+                    BorderPane.alignment="CENTER">
+            </Button>
         </VBox>
-    </center>
+    </bottom>
 </BorderPane>
