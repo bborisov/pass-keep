@@ -13,7 +13,7 @@
                 <Insets bottom="50.0" top="25.0"/>
             </BorderPane.margin>
             <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="Password Keeper helps you store your credentials in a safe manner!">
+                  text="Password Keeper® helps you store your credentials in a safe manner!">
                 <font>
                     <Font size="27.0"/>
                 </font>
