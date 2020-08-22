@@ -72,6 +72,7 @@ public class CredentialsDataController {
     public void setCredentialsData(int index, CredentialsDto data) {
         if (isFirstDataUpdate) {
             initUnmaskedPassword();
+            initSaveButtonValidation();
             initEyeIcon();
             isFirstDataUpdate = false;
         }
@@ -92,6 +93,10 @@ public class CredentialsDataController {
         unmaskedPassword.setPromptText(password.getPromptText());
         unmaskedPassword.setPrefWidth(password.getPrefWidth());
         unmaskedPassword.textProperty().bindBidirectional(password.textProperty());
+    }
+
+    private void initSaveButtonValidation() {
+        saveButton.disableProperty().bind(username.textProperty().isEmpty().or(password.textProperty().isEmpty()));
     }
 
     private void initEyeIcon() {
