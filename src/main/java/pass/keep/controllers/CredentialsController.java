@@ -9,19 +9,20 @@ import javafx.scene.text.Text;
 import pass.keep.dto.CredentialsDto;
 import pass.keep.exceptions.DbUnavailableException;
 import pass.keep.utils.DbUtil;
-import pass.keep.views.CredentialsDataListCell;
+import pass.keep.views.CredentialsListCell;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CredentialsController {
 
     private static final String NOTIFICATION_DB_UNAVAILABLE = "Database is unavailable. Please contact our support desk!";
     private static final String NOTIFICATION_ADD_MORE_CREDENTIALS = "Click below in order to add more credentials.";
 
-    ObservableList<CredentialsDto> observableCredentialsList = FXCollections.observableArrayList();
+    ObservableList<CredentialsDataController> observableCredentialsList = FXCollections.observableArrayList();
 
     @FXML
-    private ListView<CredentialsDto> credentialsList;
+    private ListView<CredentialsDataController> credentialsList;
     @FXML
     private Text notification;
     @FXML
@@ -29,15 +30,18 @@ public class CredentialsController {
 
     @FXML
     protected void addCredentials() {
-        observableCredentialsList.add(new CredentialsDto());
+        observableCredentialsList.add(new CredentialsDataController());
         credentialsList.scrollTo(observableCredentialsList.size() - 1);
         notification.setText(NOTIFICATION_ADD_MORE_CREDENTIALS);
     }
 
     public void loadCredentials() {
-        Collection<CredentialsDto> credentials;
+        List<CredentialsDataController> credentials;
         try {
-            credentials = DbUtil.loadCredentials();
+            List<CredentialsDto> dtoList = DbUtil.loadCredentials();
+            credentials = new ArrayList<>(dtoList.size());
+            dtoList.forEach(dto -> credentials.add(
+                    new CredentialsDataController(dto.getDescription(), dto.getUsername(), dto.getPassword())));
         } catch (DbUnavailableException e) {
             notification.setText(NOTIFICATION_DB_UNAVAILABLE);
             addButton.setDisable(true);
@@ -48,7 +52,7 @@ public class CredentialsController {
             notification.setText(NOTIFICATION_ADD_MORE_CREDENTIALS);
         }
 
-        credentialsList.setCellFactory(call -> new CredentialsDataListCell());
+        credentialsList.setCellFactory(call -> new CredentialsListCell());
         observableCredentialsList.setAll(credentials);
         credentialsList.setItems(observableCredentialsList);
     }

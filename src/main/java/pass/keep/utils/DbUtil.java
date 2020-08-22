@@ -8,9 +8,8 @@ import pass.keep.dto.CredentialsDto;
 import pass.keep.exceptions.DbUnavailableException;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 @Slf4j
@@ -21,7 +20,7 @@ public class DbUtil {
 
     private static final File DB_FILE = FileUtil.getDbFile();
 
-    public static Collection<CredentialsDto> loadCredentials() throws DbUnavailableException {
+    public static List<CredentialsDto> loadCredentials() throws DbUnavailableException {
         if (DB_FILE == null) {
             throw new DbUnavailableException(DB_FILE_UNAVAILABLE);
         }
@@ -29,7 +28,7 @@ public class DbUtil {
         try (DB db = DBMaker.fileDB(DB_FILE).make()) {
             ConcurrentMap<Integer, CredentialsDto> map = db.hashMap(DB_MAP_NAME, Serializer.INTEGER, Serializer.JAVA).createOrOpen();
 
-            Set<CredentialsDto> credentials = new HashSet<>(map.size());
+            List<CredentialsDto> credentials = new ArrayList<>(map.size());
             credentials.addAll(map.values());
             log.info("Successfully loaded {} objects from database", credentials.size());
             return credentials;

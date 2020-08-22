@@ -27,7 +27,6 @@ public class CredentialsDataController {
 
     private int index;
     private TextField unmaskedPassword;
-    private boolean isFirstDataUpdate = true;
 
     @FXML
     private VBox credentialsContainer;
@@ -44,6 +43,16 @@ public class CredentialsDataController {
 
     public CredentialsDataController() {
         FxUtil.loadScene(CREDENTIALS_DATA_FXML, this);
+        initUnmaskedPassword();
+        initSaveButtonValidation();
+        initEyeIcon();
+    }
+
+    public CredentialsDataController(String description, String username, String password) {
+        this();
+        this.description.setText(description);
+        this.username.setText(username);
+        this.password.setText(password);
     }
 
     @FXML
@@ -69,18 +78,8 @@ public class CredentialsDataController {
         passwordElements.add(0, elementToShow);
     }
 
-    public void setCredentialsData(int index, CredentialsDto data) {
-        if (isFirstDataUpdate) {
-            initUnmaskedPassword();
-            initSaveButtonValidation();
-            initEyeIcon();
-            isFirstDataUpdate = false;
-        }
-
+    public void setIndex(int index) {
         this.index = index;
-        description.setText(data.getDescription());
-        username.setText(data.getUsername());
-        password.setText(data.getPassword());
     }
 
     public Pane getContainer() {
