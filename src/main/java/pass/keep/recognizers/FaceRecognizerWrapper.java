@@ -1,4 +1,4 @@
-package pass.keep.recognizer;
+package pass.keep.recognizers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacpp.DoublePointer;

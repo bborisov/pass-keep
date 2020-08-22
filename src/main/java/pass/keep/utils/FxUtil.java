@@ -46,8 +46,11 @@ public class FxUtil {
         return ((FXMLLoader) stage.getScene().getUserData()).getController();
     }
 
-    public static Scene loadScene(String sceneName) {
+    public static Scene loadScene(String sceneName, Object controller) {
         FXMLLoader fxmlLoader = new FXMLLoader(FileUtil.getFxmlResource(sceneName));
+        if (controller != null) {
+            fxmlLoader.setController(controller);
+        }
 
         Scene scene = null;
         try {

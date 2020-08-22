@@ -10,12 +10,12 @@
             fx:controller="pass.keep.controllers.RegistrationController">
     <top>
         <Text fx:id="faceDirection" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="CENTER">
-            <font>
-                <Font size="19.0"/>
-            </font>
             <BorderPane.margin>
                 <Insets bottom="25.0" top="50.0"/>
             </BorderPane.margin>
+            <font>
+                <Font size="19.0"/>
+            </font>
         </Text>
     </top>
     <center>

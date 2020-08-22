@@ -7,11 +7,11 @@ import pass.keep.utils.FxUtil;
 @Getter
 public enum SceneView {
 
-    WELCOME, REGISTRATION, AUTHENTICATION;
+    WELCOME, REGISTRATION, AUTHENTICATION, CREDENTIALS;
 
     private final Scene scene;
 
     SceneView() {
-        scene = FxUtil.loadScene(name().toLowerCase());
+        scene = FxUtil.loadScene(name().toLowerCase(), null);
     }
 }

@@ -12,7 +12,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <javacv.version>1.5.2</javacv.version>
         <log4j2.version>2.13.1</log4j2.version>
     </properties>
 
@@ -21,12 +20,19 @@
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv-platform</artifactId>
-            <version>${javacv.version}</version>
+            <version>1.5.2</version>
         </dependency>
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>ffmpeg</artifactId>
             <version>4.2.1-1.5.2</version>
+        </dependency>
+
+        <!--Embedded DB-->
+        <dependency>
+            <groupId>org.mapdb</groupId>
+            <artifactId>mapdb</artifactId>
+            <version>3.0.8</version>
         </dependency>
 
         <!--Utility-->

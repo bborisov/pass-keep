@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.opencv.opencv_core.Mat;
-import pass.keep.recognizer.FaceRecognizerWrapper;
+import pass.keep.recognizers.FaceRecognizerWrapper;
 import pass.keep.utils.FxUtil;
 import pass.keep.views.SceneView;
 
@@ -37,7 +37,7 @@ public class AuthenticationController extends CameraController {
         initResources();
     }
 
-    protected void processFrame(Frame frame) {
+    private void processFrame(Frame frame) {
         if (handleCameraIssue(frame)) {
             return;
         }
