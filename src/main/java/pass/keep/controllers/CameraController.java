@@ -22,8 +22,7 @@ public abstract class CameraController {
     protected static final String START_BUTTON_PROCEED = "Proceed";
     protected static final String NOTIFICATION_CAMERA_UNAVAILABLE = "Your camera is not available." +
             " Please check is it installed correctly, blocked by antivirus software or used by another program.";
-    protected static final String NOTIFICATION_PROCESS_COMPLETED = "Process has completed successfully." +
-            " Please proceed to credentials section.";
+    protected static final String NOTIFICATION_PROCESS_COMPLETED = "Process has completed successfully.";
 
     protected ScheduledExecutorService executor;
     protected VideoCapture capture;

@@ -17,6 +17,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RegistrationController extends CameraController {
 
+    private static final String NOTIFICATION_PROCESS_COMPLETED_REGISTRATION = NOTIFICATION_PROCESS_COMPLETED +
+            " Please proceed to authentication section.";
     private static final String FACE_DIRECTION_RIGHT = "Look to the right";
     private static final String FACE_DIRECTION_LEFT = "Look to the left";
     private static final String FACE_DIRECTION_UP = "Look up";
@@ -32,8 +34,7 @@ public class RegistrationController extends CameraController {
     @FXML
     protected void collectIdentity(ActionEvent event) {
         if (isIdentityCollected()) {
-            // TODO Change after new scene is ready
-            FxUtil.openScene(event, SceneView.WELCOME, true);
+            FxUtil.openScene(event, SceneView.AUTHENTICATION, true);
             return;
         }
 
@@ -64,7 +65,7 @@ public class RegistrationController extends CameraController {
             log.info("Identity frames collected successfully");
             faceDirection.setVisible(false);
             closeResources();
-            notification.setText(NOTIFICATION_PROCESS_COMPLETED);
+            notification.setText(NOTIFICATION_PROCESS_COMPLETED_REGISTRATION);
             notification.setVisible(true);
             startButton.setText(START_BUTTON_PROCEED);
             startButton.setDisable(false);

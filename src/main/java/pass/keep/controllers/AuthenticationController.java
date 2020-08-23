@@ -3,6 +3,7 @@ package pass.keep.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.opencv.opencv_core.Mat;
@@ -18,6 +19,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class AuthenticationController extends CameraController {
 
+    private static final String NOTIFICATION_PROCESS_COMPLETED_AUTHENTICATION = NOTIFICATION_PROCESS_COMPLETED +
+            " Please proceed to credentials section.";
+
     // 90th frame -> 3rd second, 180th frame -> 6th second, 270th frame -> 9th second (30 frames per second)
     private static final List<Integer> RECOGNIZABLE_FRAME_INDEXES = Arrays.asList(90, 180, 270);
 
@@ -29,8 +33,9 @@ public class AuthenticationController extends CameraController {
     @FXML
     protected void verifyIdentity(ActionEvent event) {
         if (isAuthenticated) {
-            // TODO Change after new scene is ready
-            FxUtil.openScene(event, SceneView.WELCOME, true);
+            Stage stage = FxUtil.openScene(event, SceneView.CREDENTIALS, true);
+            CredentialsController credentialsController = FxUtil.getController(stage);
+            credentialsController.loadCredentials();
             return;
         }
 
@@ -74,7 +79,7 @@ public class AuthenticationController extends CameraController {
             log.info("Successful recognition");
             // TODO Adjust for negative case
             Platform.runLater(() -> {
-                notification.setText(NOTIFICATION_PROCESS_COMPLETED);
+                notification.setText(NOTIFICATION_PROCESS_COMPLETED_AUTHENTICATION);
                 notification.setVisible(true);
                 startButton.setText(START_BUTTON_PROCEED);
                 startButton.setDisable(false);
