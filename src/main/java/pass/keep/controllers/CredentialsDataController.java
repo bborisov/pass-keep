@@ -18,15 +18,13 @@ import pass.keep.utils.DbUtil;
 import pass.keep.utils.FileUtil;
 import pass.keep.utils.FxUtil;
 
+import javax.crypto.SecretKey;
 import java.io.InputStream;
 
 @Slf4j
 public class CredentialsDataController {
 
     private static final String CREDENTIALS_DATA_FXML = "credentials_data";
-
-    private int index;
-    private TextField unmaskedPassword;
 
     @FXML
     private VBox credentialsContainer;
@@ -41,6 +39,11 @@ public class CredentialsDataController {
     @FXML
     private Button saveButton;
 
+    private TextField unmaskedPassword;
+
+    private byte[] initVector;
+    private SecretKey secretKey;
+
     public CredentialsDataController() {
         FxUtil.loadScene(CREDENTIALS_DATA_FXML, this);
         initUnmaskedPassword();
@@ -48,11 +51,14 @@ public class CredentialsDataController {
         initEyeIcon();
     }
 
-    public CredentialsDataController(String description, String username, String password) {
+    public CredentialsDataController(String description, String username, String password, byte[] initVector,
+                                     SecretKey secretKey) {
         this();
         this.description.setText(description);
         this.username.setText(username);
         this.password.setText(password);
+        this.initVector = initVector;
+        this.secretKey = secretKey;
     }
 
     @FXML
@@ -61,8 +67,10 @@ public class CredentialsDataController {
         credentialsDto.setDescription(description.getText());
         credentialsDto.setUsername(username.getText());
         credentialsDto.setPassword(password.getText());
+        credentialsDto.setInitVector(initVector);
+        credentialsDto.setSecretKey(secretKey);
 
-        DbUtil.saveCredentials(index, credentialsDto);
+        DbUtil.saveCredentials(credentialsDto);
     }
 
     @FXML
@@ -76,10 +84,6 @@ public class CredentialsDataController {
         ObservableList<Node> passwordElements = ((HBox) elementToHide.getParent()).getChildren();
         passwordElements.remove(elementToHide);
         passwordElements.add(0, elementToShow);
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public Pane getContainer() {

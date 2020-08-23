@@ -5,6 +5,7 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Serializer;
 import pass.keep.dto.CredentialsDto;
+import pass.keep.entities.CredentialsEntity;
 import pass.keep.exceptions.DbUnavailableException;
 
 import java.io.File;
@@ -26,10 +27,10 @@ public class DbUtil {
         }
 
         try (DB db = DBMaker.fileDB(DB_FILE).make()) {
-            ConcurrentMap<Integer, CredentialsDto> map = db.hashMap(DB_MAP_NAME, Serializer.INTEGER, Serializer.JAVA).createOrOpen();
+            ConcurrentMap<String, CredentialsEntity> map = db.hashMap(DB_MAP_NAME, Serializer.STRING, Serializer.JAVA).createOrOpen();
 
             List<CredentialsDto> credentials = new ArrayList<>(map.size());
-            credentials.addAll(map.values());
+            map.values().forEach(entity -> credentials.add(CredentialsDto.of(entity)));
             log.info("Successfully loaded {} objects from database", credentials.size());
             return credentials;
         } catch (Exception e) {
@@ -38,15 +39,17 @@ public class DbUtil {
         }
     }
 
-    public static void saveCredentials(int index, CredentialsDto data) throws DbUnavailableException {
+    public static void saveCredentials(CredentialsDto dto) throws DbUnavailableException {
         if (DB_FILE == null) {
             throw new DbUnavailableException(DB_FILE_UNAVAILABLE);
         }
 
         try (DB db = DBMaker.fileDB(DB_FILE).make()) {
-            ConcurrentMap<Integer, CredentialsDto> map = db.hashMap(DB_MAP_NAME, Serializer.INTEGER, Serializer.JAVA).createOrOpen();
-            map.put(index, data);
-            log.info("Successfully saved {} in database", data);
+            CredentialsEntity entity = CredentialsEntity.of(dto);
+
+            ConcurrentMap<String, CredentialsEntity> map = db.hashMap(DB_MAP_NAME, Serializer.STRING, Serializer.JAVA).createOrOpen();
+            map.put(entity.getSecretKey(), entity);
+            log.info("Successfully saved {} in database", entity);
         } catch (Exception e) {
             log.error("Cannot save object in database", e);
             throw new DbUnavailableException(e);

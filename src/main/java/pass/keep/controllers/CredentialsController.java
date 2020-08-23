@@ -40,8 +40,9 @@ public class CredentialsController {
         try {
             List<CredentialsDto> dtoList = DbUtil.loadCredentials();
             credentials = new ArrayList<>(dtoList.size());
-            dtoList.forEach(dto -> credentials.add(
-                    new CredentialsDataController(dto.getDescription(), dto.getUsername(), dto.getPassword())));
+            dtoList.forEach(dto ->
+                    credentials.add(new CredentialsDataController(dto.getDescription(), dto.getUsername(),
+                            dto.getPassword(), dto.getInitVector(), dto.getSecretKey())));
         } catch (DbUnavailableException e) {
             notification.setText(NOTIFICATION_DB_UNAVAILABLE);
             addButton.setDisable(true);

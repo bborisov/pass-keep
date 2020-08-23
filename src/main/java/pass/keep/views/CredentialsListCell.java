@@ -13,8 +13,6 @@ public class CredentialsListCell extends ListCell<CredentialsDataController> {
             setGraphic(null);
             return;
         }
-
-        data.setIndex(getIndex());
         setGraphic(data.getContainer());
     }
 }
