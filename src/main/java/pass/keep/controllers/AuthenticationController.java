@@ -19,11 +19,13 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class AuthenticationController extends CameraController {
 
-    private static final String NOTIFICATION_PROCESS_COMPLETED_AUTHENTICATION = NOTIFICATION_PROCESS_COMPLETED +
-            " Please proceed to credentials section.";
-
     // 90th frame -> 3rd second, 180th frame -> 6th second, 270th frame -> 9th second (30 frames per second)
     private static final List<Integer> RECOGNIZABLE_FRAME_INDEXES = Arrays.asList(90, 180, 270);
+
+    private static final String NOTIFICATION_AUTHENTICATION_COMPLETED = NOTIFICATION_PROCESS_COMPLETED +
+            " Please proceed to credentials section.";
+    private static final String NOTIFICATION_AUTHENTICATION_FAILED = "After " + RECOGNIZABLE_FRAME_INDEXES.size() +
+            " attempts no successful recognition was encountered.";
 
     private FaceRecognizerWrapper recognizer;
     private List<Mat> recognizableFrames;
@@ -77,15 +79,20 @@ public class AuthenticationController extends CameraController {
 
         if (isAuthenticated) {
             log.info("Successful recognition");
-            // TODO Adjust for negative case
             Platform.runLater(() -> {
-                notification.setText(NOTIFICATION_PROCESS_COMPLETED_AUTHENTICATION);
+                notification.setText(NOTIFICATION_AUTHENTICATION_COMPLETED);
                 notification.setVisible(true);
                 startButton.setText(START_BUTTON_PROCEED);
                 startButton.setDisable(false);
             });
         } else {
             log.info("No successful recognition after {} attempts", recognizableFrames.size());
+            Platform.runLater(() -> {
+                notification.setText(NOTIFICATION_AUTHENTICATION_FAILED);
+                notification.setVisible(true);
+                startButton.setText(START_BUTTON_TRY_AGAIN);
+                startButton.setDisable(false);
+            });
         }
         closeResources();
     }

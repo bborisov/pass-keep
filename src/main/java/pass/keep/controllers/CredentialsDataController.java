@@ -26,6 +26,11 @@ public class CredentialsDataController {
 
     private static final String CREDENTIALS_DATA_FXML = "credentials_data";
 
+    private byte[] initVector;
+    private SecretKey secretKey;
+
+    private TextField unmaskedPassword;
+
     @FXML
     private VBox credentialsContainer;
     @FXML
@@ -38,11 +43,6 @@ public class CredentialsDataController {
     private Button passwordToggle;
     @FXML
     private Button saveButton;
-
-    private TextField unmaskedPassword;
-
-    private byte[] initVector;
-    private SecretKey secretKey;
 
     public CredentialsDataController() {
         FxUtil.loadScene(CREDENTIALS_DATA_FXML, this);

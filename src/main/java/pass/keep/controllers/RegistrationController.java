@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RegistrationController extends CameraController {
 
-    private static final String NOTIFICATION_PROCESS_COMPLETED_REGISTRATION = NOTIFICATION_PROCESS_COMPLETED +
+    private static final String NOTIFICATION_REGISTRATION_COMPLETED = NOTIFICATION_PROCESS_COMPLETED +
             " Please proceed to authentication section.";
     private static final String FACE_DIRECTION_RIGHT = "Look to the right";
     private static final String FACE_DIRECTION_LEFT = "Look to the left";
@@ -65,7 +65,7 @@ public class RegistrationController extends CameraController {
             log.info("Identity frames collected successfully");
             faceDirection.setVisible(false);
             closeResources();
-            notification.setText(NOTIFICATION_PROCESS_COMPLETED_REGISTRATION);
+            notification.setText(NOTIFICATION_REGISTRATION_COMPLETED);
             notification.setVisible(true);
             startButton.setText(START_BUTTON_PROCEED);
             startButton.setDisable(false);

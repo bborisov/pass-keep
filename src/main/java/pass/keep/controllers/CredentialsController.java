@@ -19,7 +19,7 @@ public class CredentialsController {
     private static final String NOTIFICATION_DB_UNAVAILABLE = "Database is unavailable. Please contact our support desk!";
     private static final String NOTIFICATION_ADD_MORE_CREDENTIALS = "Click below in order to add more credentials.";
 
-    ObservableList<CredentialsDataController> observableCredentialsList = FXCollections.observableArrayList();
+    private ObservableList<CredentialsDataController> observableCredentialsList = FXCollections.observableArrayList();
 
     @FXML
     private ListView<CredentialsDataController> credentialsList;
