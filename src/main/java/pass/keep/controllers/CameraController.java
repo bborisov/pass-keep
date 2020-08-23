@@ -27,6 +27,7 @@ public abstract class CameraController {
     protected ScheduledExecutorService executor;
     protected VideoCapture capture;
     protected int frameCounter;
+    protected boolean isClosingResources;
 
     protected OpenCVFrameConverter.ToMat matConverter;
     protected JavaFXFrameConverter fxConverter;
@@ -61,6 +62,10 @@ public abstract class CameraController {
 
     protected boolean handleCameraIssue(Frame frame) {
         if (frame == null) {
+            // Workaround for receiving null frame few seconds after resource closing
+            if (isClosingResources) {
+                return true;
+            }
             log.error("Camera issue encountered");
             notification.setText(NOTIFICATION_CAMERA_UNAVAILABLE);
             closeResources();
@@ -77,6 +82,7 @@ public abstract class CameraController {
         executor = Executors.newScheduledThreadPool(2);
         capture = new VideoCapture();
         frameCounter = 0;
+        isClosingResources = false;
 
         matConverter = new OpenCVFrameConverter.ToMat();
         fxConverter = new JavaFXFrameConverter();
@@ -89,6 +95,7 @@ public abstract class CameraController {
 
     protected void closeResources() {
         log.info("Closing resources");
+        isClosingResources = true;
         cameraView.setImage(null);
         executor.shutdown();
         capture.release();

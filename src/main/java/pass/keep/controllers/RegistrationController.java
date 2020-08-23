@@ -42,11 +42,11 @@ public class RegistrationController extends CameraController {
     }
 
     private void processFrame(Frame frame) {
-        if (handleIdentityCollected()) {
+        if (handleCameraIssue(frame)) {
             return;
         }
 
-        if (handleCameraIssue(frame)) {
+        if (handleIdentityCollected()) {
             return;
         }
 
