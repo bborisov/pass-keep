@@ -13,9 +13,9 @@ public class WelcomeController {
     private static final String NEXT_SCENE_BUTTON_REGISTER = "Register";
     private static final String NEXT_SCENE_BUTTON_CHECK_IDENTITY = "Check identity";
     private static final String LOWER_TITLE_REGISTER = "In order to use this application you need to create an account." +
-            " Please clink the \"" + NEXT_SCENE_BUTTON_REGISTER + "\" button below.";
+            " Please click the \"" + NEXT_SCENE_BUTTON_REGISTER + "\" button below.";
     private static final String LOWER_TITLE_CHECK_IDENTITY = "You already have created an account." +
-            " Please clink the \"" + NEXT_SCENE_BUTTON_CHECK_IDENTITY + "\" button below in order to access your data.";
+            " Please click the \"" + NEXT_SCENE_BUTTON_CHECK_IDENTITY + "\" button below in order to access your data.";
 
     @FXML
     private Text lowerTitle;
